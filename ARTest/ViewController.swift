@@ -12,6 +12,10 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
+//    @IBOutlet var sceneView: ARSCNView!
+    
+//    @IBOutlet var sceneView: ARSCNView!
+    
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
@@ -21,13 +25,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene(named: "art.scnassets/KaiDrifter.scn")!
+        let sceneNode = SCNNode()
+        let sceneChildNodes = scene.rootNode.childNodes
+
+        for sceneChileNode in sceneChildNodes {
+            sceneNode.addChildNode(sceneChileNode)
+        }
         
         // Set the scene to the view
-        sceneView.scene = scene
+//        sceneView.scene = scene
+        
+        sceneNode.position = SCNVector3(0,-1,-0.5)
+        sceneNode.scale = SCNVector3(0.01,0.01,0.01)
+        sceneView.scene.rootNode.addChildNode(sceneNode)
     }
     
     override func viewWillAppear(_ animated: Bool) {
